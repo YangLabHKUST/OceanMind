@@ -3246,6 +3246,9 @@ h4 {
   color: var(--muted);
   font-size: var(--card-body-size);
   line-height: 1.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .web-search-result-list {
@@ -3281,14 +3284,26 @@ h4 {
   font-weight: 650;
   line-height: 1.45;
   text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.web-search-result-body p,
-.web-search-result-body span {
+.web-search-result-snippet {
   margin: 0;
   color: var(--muted);
   font-size: var(--card-body-size);
   line-height: 1.5;
+  max-height: 3em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.web-search-result-snippet a {
+  color: var(--accent);
 }
 
 

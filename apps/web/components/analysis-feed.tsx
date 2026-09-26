@@ -111,13 +111,8 @@ function assistantProgressIcon(
 }
 
 function buildSourceSummary(source: SourceCard) {
-  const parts = [source.short_snippet]
-    .map((item) => item?.trim())
-    .filter((item): item is string => Boolean(item));
-  if (parts.length === 0) {
-    return "";
-  }
-  return parts.join(" ");
+  const snippet = source.short_snippet?.trim() ?? "";
+  return snippet.split(/\s+---\s+(?=(?:Title|URL|Published|Author|Highlights):)/i)[0].trim();
 }
 
 function buildWebSearchHeader(sourceCards: SourceCard[], chinese: boolean) {
@@ -579,7 +574,14 @@ function AssistantBlock({
                     <a href={source.url} rel="noreferrer" target="_blank" className="web-search-result-title">
                       {source.title || source.source || (chinese ? "搜索结果" : "Search result")}
                     </a>
-                    {summary ? <p>{summary}</p> : null}
+                    {summary ? <div className="web-search-result-snippet"><ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      skipHtml
+                      components={{
+                        p: ({ children }) => <span>{children} </span>,
+                        a: ({ children, href }) => <a href={href} rel="noreferrer" target="_blank">{children}</a>,
+                      }}
+                    >{summary}</ReactMarkdown></div> : null}
                   </div>
                 </article>
               );
